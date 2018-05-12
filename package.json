@@ -1,0 +1,37 @@
+{
+  "name": "autocat",
+  "version": "0.1.0",
+  "description": "I like cat pictures.",
+  "main": "./lib/index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node ./lib",
+    "prod": "NODE_ENV=production node ./scripts/index.prod",
+    "dev": "NODE_ENV=development nodemon ./scripts/index.dev.js",
+    "dev:test": "RUN_DIR=tools/bokor.test.js npm run dev",
+    "clean": "rm -rf ./lib/ && mkdir lib",
+    "build": "npm run clean && npm run build:babel",
+    "build:babel": "NODE_ENV=production babel src -d lib"
+  },
+  "author": "David Robinson <dr@machinezone.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-plugin-transform-es2015-destructuring": "6.23.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-env": "1.6.1",
+    "babel-register": "6.26.0",
+    "eslint": "4.19.1",
+    "eslint-config-airbnb": "16.1.0",
+    "eslint-plugin-import": "2.11.0",
+    "eslint-plugin-jsx-a11y": "6.0.3",
+    "eslint-plugin-react": "7.7.0"
+  },
+  "dependencies": {
+    "axios": "0.18.0",
+    "chalk": "2.4.1",
+    "dotenv": "5.0.1",
+    "express": "4.16.3",
+    "nodemon": "1.17.4",
+    "twilio": "3.17.0"
+  }
+}
