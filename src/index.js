@@ -19,6 +19,7 @@ import routes from './routes';
 dotenv.config();
 
 const {
+  NODE_ENV,
   PORT,
   TWILIO_API_ACCOUNT,
   TWILIO_API_KEY,
@@ -26,6 +27,7 @@ const {
 } = process.env;
 
 const port = PORT || 3333;
+const address = NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
 
 const app = express();
 const server = http.Server(app);
@@ -35,7 +37,7 @@ const catAPI = 'http://thecatapi.com/api/images/get';
 
 console.log(chalk.cyan('AUTOCAT IS LIVE RIGHT MEOW'));
 
-server.listen(port, 'localhost', () => {
+server.listen(port, address, () => {
   const address = server.address();
   const serverAddress = `http://${address.address}:${address.port}`;
   console.log(chalk.green.bold.underline(`\nAUTOCAT Listening on ${port}\n`));
