@@ -29,33 +29,30 @@ export default function (props) {
   app.post('/message', (req, res) => {
     console.log('SMS Recieved');
     const { body } = req;
-    const number = req.From;
+    const number = body.From;
 
     sendCat(number)
       .then((res) => {
         console.log(`Sent Cat to ${number}`);
       })
+      .catch(err => console.error(err));
 
     res.end();
   });
 
   app.post('/message-fail', (req, res) => {
     console.log('SMS Failed');
-    console.log(req);
   });
 
   app.post('/call', (req, res) => {
     console.log('Call Recieved');
-    console.log(req);
   });
 
   app.post('/call-fail', (req, res) => {
     console.log('Call Failed');
-    console.log(req);
   });
 
   app.post('/call-status', (req, res) => {
     console.log('Call Status Changed');
-    console.log(req);
   });
 }
