@@ -31,7 +31,7 @@ export default function (props) {
     const { body } = req;
     const number = req.From;
 
-    sendCat()
+    sendCat(number)
       .then((res) => {
         console.log(`Sent Cat to ${number}`);
       })
