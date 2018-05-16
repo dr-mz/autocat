@@ -15,7 +15,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 export default function (props) {
-  const { app } = props;
+  const { app, twilioClient, sendCat } = props;
 
   // app.set('view engine', 'pug');
   // app.set('views', path.join(__dirname, '../views'));
@@ -28,7 +28,15 @@ export default function (props) {
 
   app.post('/message', (req, res) => {
     console.log('SMS Recieved');
-    console.log(req);
+    const { body } = req;
+    const number = req.From;
+
+    sendCat()
+      .then((res) => {
+        console.log(`Sent Cat to ${number}`);
+      })
+
+    res.end();
   });
 
   app.post('/message-fail', (req, res) => {

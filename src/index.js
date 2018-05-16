@@ -35,6 +35,15 @@ const server = http.Server(app);
 const twilioClient = new twilio(TWILIO_API_ACCOUNT, TWILIO_API_KEY);
 const catAPI = 'http://thecatapi.com/api/images/get';
 
+const sendCat = (to) => {
+  return twilioClient.messages.create({
+    mediaUrl: catAPI,
+    body: '',
+    to,
+    from: TWILIO_NUMBER,
+  });
+}
+
 console.log(chalk.cyan('AUTOCAT IS LIVE RIGHT MEOW'));
 
 server.listen(port, address, () => {
@@ -43,5 +52,5 @@ server.listen(port, address, () => {
   console.log(chalk.green.bold.underline(`\nAUTOCAT Listening on ${port}\n`));
   console.log(chalk.cyan.bold(`\t> ${serverAddress}\n`));
 
-  routes({ app, port, twilioClient });
+  routes({ app, port, twilioClient, sendCat });
 });
