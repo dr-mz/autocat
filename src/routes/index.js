@@ -16,7 +16,7 @@ import bodyParser from 'body-parser';
 
 import twilio from 'twilio';
 
-const MessagingResponse = twilio.twiml;
+const { MessagingResponse } = twilio.twiml;
 
 export default function (props) {
   const { app, twilioClient, catAPI, sendCat } = props;
