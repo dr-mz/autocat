@@ -14,8 +14,12 @@ import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import { twiml } from 'twilio';
+
+const { MessagingResponse } = twiml;
+
 export default function (props) {
-  const { app, twilioClient, sendCat } = props;
+  const { app, twilioClient, catAPI, sendCat } = props;
 
   // app.set('view engine', 'pug');
   // app.set('views', path.join(__dirname, '../views'));
@@ -27,32 +31,36 @@ export default function (props) {
   });
 
   app.post('/message', (req, res) => {
-    console.log('SMS Recieved');
+
     const { body } = req;
     const number = body.From;
 
-    sendCat(number)
-      .then((res) => {
-        console.log(`Sent Cat to ${number}`);
-      })
-      .catch(err => console.error(err));
+    const message = new MessagingResponse();
+    message.media = catAPI;
 
-    res.end();
+    console.log(`SMS Recieved, Sending Cat to: ${number}`);
+
+    res.writeHead(200, { 'Content-Type': 'text/xml' });
+    res.end(message.toString());
   });
 
   app.post('/message-fail', (req, res) => {
     console.log('SMS Failed');
+    res.end();
   });
 
   app.post('/call', (req, res) => {
     console.log('Call Recieved');
+    res.end();
   });
 
   app.post('/call-fail', (req, res) => {
     console.log('Call Failed');
+    res.end();
   });
 
   app.post('/call-status', (req, res) => {
     console.log('Call Status Changed');
+    res.end();
   });
 }

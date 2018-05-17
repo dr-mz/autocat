@@ -52,5 +52,5 @@ server.listen(port, address, () => {
   console.log(chalk.green.bold.underline(`\nAUTOCAT Listening on ${port}\n`));
   console.log(chalk.cyan.bold(`\t> ${serverAddress}\n`));
 
-  routes({ app, port, twilioClient, sendCat });
+  routes({ app, port, twilioClient, catAPI, sendCat });
 });
