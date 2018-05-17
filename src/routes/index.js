@@ -14,9 +14,9 @@ import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 
-import { twiml } from 'twilio';
+import twilio from 'twilio';
 
-const { MessagingResponse } = twiml;
+const MessagingResponse = twilio.twiml;
 
 export default function (props) {
   const { app, twilioClient, catAPI, sendCat } = props;
@@ -35,13 +35,15 @@ export default function (props) {
     const { body } = req;
     const number = body.From;
 
-    const message = new MessagingResponse();
-    message.media = catAPI;
+    const twiml = new MessagingResponse();
+    const message = twiml.message();
+    message.media(catAPI);
+    message.body('Here\'s a Cat');
 
     console.log(`SMS Recieved, Sending Cat to: ${number}`);
 
     res.writeHead(200, { 'Content-Type': 'text/xml' });
-    res.end(message.toString());
+    res.end(twiml.toString());
   });
 
   app.post('/message-fail', (req, res) => {
